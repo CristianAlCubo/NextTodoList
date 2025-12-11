@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/CristianAlCubo/NextTodoList/compare/v1.2.0...v1.3.0) (2025-12-11)
+
+
+### Features
+
+* Add nginx config for SPA capabilities ([b77ca45](https://github.com/CristianAlCubo/NextTodoList/commit/b77ca4539282ea9d09d89480d2984fe08d2a6d64))
+
+
+### Bug Fixes
+
+* Fix content of Dockerfile ([3612b82](https://github.com/CristianAlCubo/NextTodoList/commit/3612b820564eef85c549bd0ad853d128659a5e6c))
+
 ## [1.2.0](https://github.com/CristianAlCubo/NextTodoList/compare/v1.1.0...v1.2.0) (2025-12-11)
 
 
