@@ -1,52 +1,14 @@
-name: Release & Publish Docker Image
+# Builder stage
+FROM node:22-alpine AS builder
+WORKDIR /app
+COPY package.json .
+RUN npm ci
+COPY . .
+RUN npm run build
 
-on:
-  push:
-    branches:
-      - main
-
-permissions:
-  contents: write
-  pull-requests: write
-
-jobs:
-  release:
-    runs-on: ubuntu-latest
-    outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Run Release Please
-        id: release
-        uses: google-github-actions/release-please-action@v4
-        with:
-          release-type: node
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-  publish-docker:
-    needs: release
-    if: ${{ needs.release.outputs.release_created == 'true' }}
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Log in to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build & push Docker image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          tags: |
-            camilocubillos/dashboard:latest
-            camilocubillos/dashboard:${{ needs.release.outputs.tag_name }}
+# Production stage
+FROM nginx:stable-alpine
+COPY --from=builder /app/.next /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
