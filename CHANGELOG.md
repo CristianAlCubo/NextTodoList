@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/CristianAlCubo/NextTodoList/compare/v1.1.0...v1.2.0) (2025-12-11)
+
+
+### Features
+
+* Add change 002 ([de3c8c5](https://github.com/CristianAlCubo/NextTodoList/commit/de3c8c5bb22998ea977ab2ae1fd09823a26705a7))
+
 ## [1.1.0](https://github.com/CristianAlCubo/NextTodoList/compare/v1.0.0...v1.1.0) (2025-12-11)
 
 
